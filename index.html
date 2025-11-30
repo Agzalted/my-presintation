@@ -1,257 +1,238 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8" />
-<title>Custom Shower Theme</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="utf-8" />
+  <title>Дизайнерские слайды — Shower</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<!-- Только core Shower (без темы) -->
-<link rel="stylesheet" href="node_modules/@shower/core/dist/shower.css">
+  <!-- Оставьте путь если у вас есть shower; иначе удалите и откройте локально без темы -->
+  <link rel="stylesheet" href="node_modules/@shower/ribbon/styles/styles.css">
 
-<style>
-/* -----------------------------------------------
-   Глобальный фон страницы
--------------------------------------------------*/
-body {
-    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-    background: radial-gradient(circle at 30% 20%, #1b2330, #0a0d12 70%) fixed;
-    color: #e6eef6;
-    margin: 0;
-}
-
-/* Соотношение слайдов */
-.shower {
-    --slide-ratio: calc(16 / 9);
-}
-
-/* -----------------------------------------------
-   Стиль слайдов
--------------------------------------------------*/
-.slide {
-    padding: 60px;
-    border-radius: 22px;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.05);
-    box-shadow:
-        0 20px 40px rgba(0,0,0,0.6),
-        inset 0 0 40px rgba(255,255,255,0.03);
-    backdrop-filter: blur(18px);
-}
-
-/* крупный красивый заголовок */
-.slide h2 {
-    font-size: 48px;
-    font-weight: 700;
-    background: linear-gradient(90deg, #7cd1ff, #6ef1c2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-top: 0;
-    margin-bottom: 20px;
-}
-
-/* подзаголовки */
-.slide h3 {
-    font-size: 26px;
-    margin-top: 24px;
-}
-
-/* обычный текст */
-.slide p,
-.slide li {
-    font-size: 20px;
-    color: #9fb0c3;
-    line-height: 1.55;
-}
-
-ul { padding-left: 24px; }
-
-/* -----------------------------------------------
-   Hero-слайд
--------------------------------------------------*/
-#hero {
-    display: grid;
-    place-items: center;
-    text-align: center;
-    min-height: 75vh;
-    background:
-        linear-gradient(180deg, rgba(7,12,19,.65), rgba(7,12,19,.85)),
-        url('assets/hero.jpg') center/cover no-repeat;
-    border-radius: 22px;
-    overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0,0,0,.65);
-}
-
-#hero h1 {
-    font-size: 64px;
-    margin: 0;
-    color: #fff;
-}
-
-#hero p {
-    margin-top: 16px;
-    font-size: 22px;
-    color: #c8d4e0;
-}
-
-/* -----------------------------------------------
-   Карточки (3D, hover)
--------------------------------------------------*/
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-    gap: 26px;
-    margin-top: 30px;
-}
-
-.card {
-    padding: 22px;
-    background: rgba(255,255,255,.03);
-    border: 1px solid rgba(255,255,255,.07);
-    border-radius: 18px;
-    box-shadow: 0 12px 30px rgba(0,0,0,.3);
-    transition: .25s ease;
-}
-
-.card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 18px 40px rgba(0,0,0,.45);
-}
-
-/* -----------------------------------------------
-   Таймлайн
--------------------------------------------------*/
-.timeline {
-    display: flex;
-    gap: 18px;
-    overflow-x: auto;
-    padding-top: 18px;
-}
-
-.step {
-    min-width: 200px;
-    padding: 16px;
-    border-radius: 14px;
-    background: rgba(255,255,255,.03);
-    border: 1px solid rgba(255,255,255,.06);
-}
-
-.step .year {
-    font-size: 22px;
-    font-weight: 700;
-    color: #7cd1ff;
-}
-.step .txt {
-    margin-top: 8px;
-    font-size: 16px;
-    color: #9fb0c3;
-}
-
-/* -----------------------------------------------
-   Адаптив
--------------------------------------------------*/
-@media(max-width:900px){
-    .slide {
-        padding: 30px;
+  <style>
+    :root{
+      --bg: #0b0f14;
+      --card:#0f1720;
+      --accent: #7cd1ff;
+      --muted:#9fb0c3;
+      --glass: rgba(255,255,255,.04);
     }
-    .slide h2 {
-        font-size: 36px;
-    }
+    body{font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:#e6eef6;}
+    .shower{ --slide-ratio: calc(16 / 9); }
+    .slide{ padding:40px;}
+
+/* ---------- Hero / Title (фон + градиент + крупный заголовок) ---------- */
+#hero{
+  display:grid;
+  align-items:center;
+  justify-items:center;
+  text-align:center;
+  min-height:60vh;
+  background:
+    linear-gradient(180deg, rgba(7,12,19,.55), rgba(7,12,19,.55)),
+    url('assets/hero.jpg') center/cover no-repeat;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,.6);
+}
+#hero h2{ font-size: clamp(36px,6vw,64px); margin: 0; letter-spacing: .6px; color: #fff; text-transform: none;}
+#hero p.lead{ color: var(--muted); margin-top:12px; font-size:18px; }
+
+/* ---------- Features grid (иконки + карточки) ---------- */
+.features{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap:20px;
+}
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+  border:1px solid rgba(255,255,255,.04);
+  padding:18px; border-radius:14px;
+  display:flex; gap:14px; align-items:flex-start;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.card:hover{ transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,.45); }
+.card .icon{
+  width:64px; height:64px; border-radius:12px; display:grid; place-items:center;
+  background: linear-gradient(135deg, rgba(124,209,255,.12), rgba(124,255,194,.06)); border:1px solid rgba(124,209,255,.12);
+  font-size:24px; color:var(--accent);
+}
+.card h3{ margin:0 0 4px; font-size:18px; }
+.card p{ margin:0; color:var(--muted); font-size:14px; }
+
+/* ---------- Timeline (горизонтальная) ---------- */
+.timeline{ display:flex; gap:18px; align-items:center; overflow:auto; padding:8px 6px; }
+.timeline .step{ min-width:180px; background:var(--card); border-radius:12px; padding:14px; border:1px solid rgba(255,255,255,.03); }
+.timeline .year{ color:var(--accent); font-weight:700; font-size:18px; }
+.timeline .txt{ color:var(--muted); font-size:13px; margin-top:8px; }
+
+/* ---------- Two-column showcase ---------- */
+.showcase{ display:grid; grid-template-columns: 1fr 1fr; gap:28px; align-items:center; }
+.showcase .img{ border-radius:12px; overflow:hidden; box-shadow: 0 8px 24px rgba(0,0,0,.45); }
+.showcase img{ width:100%; height:100%; object-fit:cover; display:block; }
+.showcase .text h3{ margin-top:0; }
+.showcase .text p{ color:var(--muted); }
+
+/* ---------- Chart placeholder (имитация столбчатого графика) ---------- */
+.chart{
+  display:flex; gap:18px; align-items:end; height:220px; padding:24px; background: linear-gradient(180deg, rgba(255,255,255,.01), rgba(255,255,255,.02)); border-radius:12px;
+}
+.bar{ width:60px; border-radius:8px 8px 4px 4px; background:linear-gradient(180deg,var(--accent),#6ef1c2); display:flex; align-items:end; justify-content:center; }
+.bar .val{ writing-mode:vertical-rl; transform: rotate(180deg); color:#042; font-weight:700; padding-bottom:8px; font-size:14px; }
+
+/* ---------- Gallery grid ---------- */
+.gallery{ display:grid; grid-template-columns: repeat(3,1fr); gap:12px; }
+.gallery .g{ border-radius:10px; overflow:hidden; height:140px; background-size:cover; background-position:center; position:relative; }
+.gallery .g::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.25)); }
+
+/* ---------- Quote / callout ---------- */
+.callout{ background: linear-gradient(90deg, rgba(124,209,255,.04), rgba(124,255,194,.02)); border:1px solid rgba(124,209,255,.06); padding:24px; border-radius:12px; color:var(--muted); }
+
+/* Responsive */
+@media (max-width:900px){
+  .showcase{ grid-template-columns:1fr; }
+  .gallery{ grid-template-columns: repeat(2,1fr); }
 }
 </style>
 </head>
-
 <body class="shower list">
 
-<header class="caption">
-    <h1>Custom Shower Theme</h1>
-    <p>Современный интерфейс — без стандартных шаблонов</p>
-</header>
+  <header class="caption">
+    <h1>Обзор биометрии</h1>
+    <p>Современные технологии, применение и влияние — 2025</p>
+  </header>
 
-<!-- ---------------------- -->
-<!-- №1 Hero-слайд -->
-<!-- ---------------------- -->
-<section class="slide" id="hero">
-    <div>
-        <h1>История NVIDIA</h1>
-        <p>От NV1 до эпохи искусственного интеллекта</p>
+  <!-- Слайд 1: титул -->
+  <section class="slide" id="s1">
+    <h2>Обзор биометрии</h2>
+    <p class="lead">Современные технологии, применение и влияние</p>
+    <p class="small">Коровин Аким — ИУ3-31М, 2025</p>
+  </section>
+
+  <!-- Слайд 2: исторический и технологический контекст -->
+  <section class="slide" id="s2">
+    <h2>Исторический и технологический контекст</h2>
+    <p>Биометрия развивается с XIX века (первые — отпечатки пальцев). К концу XX века появились распознавание лица и радужки.</p>
+    <p class="lead">Современный прогресс обеспечили рост вычислительных мощностей, компьютерное зрение и машинное обучение — это сделало биометрию универсальной во многих сферах.</p>
+  </section>
+
+  <!-- Слайд 3: определение; физиологическая vs поведенческая -->
+  <section class="slide" id="s3">
+    <h2>Определение биометрии</h2>
+    <p>Биометрия — методы идентификации по уникальным биологическим признакам человека.</p>
+
+    <div class="columns two">
+      <div>
+        <h3>Физиологическая биометрия</h3>
+        <p>Измерение физических характеристик: отпечатки пальцев, радужная оболочка, геометрия ладони. Обычно эти параметры статичны и стабильны во времени.</p>
+      </div>
+      <div>
+        <h3>Поведенческая биометрия</h3>
+        <p>Учитывает динамические особенности: голос, походка, стиль набора текста. Эти параметры изменчивы и зависят от условий.</p>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- ---------------------- -->
-<!-- №2 Пример обычного слайда -->
-<!-- ---------------------- -->
-<section class="slide">
-    <h2>Основание NVIDIA</h2>
-    <p>Компания была основана 5 апреля 1993 года тремя инженерами, которые решили сосредоточиться на 3D-графике.</p>
+  <!-- Слайд 4: история и развитие -->
+  <section class="slide" id="s4">
+    <h2>История и развитие</h2>
+    <p>Отпечатки пальцев стали основой идентификации в XIX веке. В XX веке появились методы распознавания лица и радужки.</p>
+    <p class="lead">Развитие ИИ и вычислительных мощностей существенно расширило возможности биометрии в XXI веке.</p>
+  </section>
+
+  <!-- Слайд 5: основные методы -->
+  <section class="slide" id="s5">
+    <h2>Основные методы биометрии</h2>
     <ul>
-        <li>Ставка на игровую 3D-графику</li>
-        <li>Работа с OEM-производителями</li>
-        <li>Первые эксперименты со специализированными чипами</li>
+      <li><strong>Отпечаток пальца</strong> — самый распространённый, уникальность папиллярного узора.</li>
+      <li><strong>Распознавание лица</strong> — анализ пропорций и черт лица с помощью камер и алгоритмов CV.</li>
+      <li><strong>Распознавание радужной оболочки</strong> — высокоточный метод анализа структуры ириса.</li>
+      <li><strong>Распознавание голоса</strong> — анализ тембра и интонации.</li>
+      <li><strong>Поведенческая биометрия</strong> — походка, подпись, паттерны ввода (keystroke dynamics).</li>
     </ul>
-</section>
+  </section>
 
-<!-- ---------------------- -->
-<!-- №3 Карточки -->
-<!-- ---------------------- -->
-<section class="slide">
-    <h2>Ключевые продукты</h2>
+  <!-- Слайд 6: применения в повседневной жизни -->
+  <section class="slide" id="s6">
+    <h2>Применения биометрии в повседневной жизни</h2>
+    <p>Биометрия уже применяется для безопасности и удобства: мобильные устройства (разблокировка), банковские сервисы, контроль доступа, государственная идентификация, медицина.</p>
+    <p class="small">Биометрия расширяет возможности бесконтактной и безопасной аутентификации во многих областях.</p>
+  </section>
 
-    <div class="cards">
-        <div class="card">
-            <h3>NV1</h3>
-            <p>Первый экспериментальный ускоритель. Неудача подтолкнула NVIDIA к правильной стратегии.</p>
-        </div>
-        <div class="card">
-            <h3>RIVA TNT</h3>
-            <p>Первая массовая видеокарта, принесшая компании устойчивый успех.</p>
-        </div>
-        <div class="card">
-            <h3>GeForce 256</h3>
-            <p>Первый GPU в индустрии: начало новой графической эры.</p>
-        </div>
+  <!-- Слайд 7: биометрия на рабочем месте -->
+  <section class="slide" id="s7">
+    <h2>Биометрия на рабочем месте</h2>
+    <p>Используется для контроля доступа, учёта рабочего времени и мониторинга состояния сотрудников (включая физиологические показатели и выражения лица).</p>
+    <p class="lead">Потенциал для улучшения условий труда велик, однако важны этические аспекты и защита приватности работника.</p>
+  </section>
+
+  <!-- Слайд 8: исследования и тренды -->
+  <section class="slide" id="s8">
+    <h2>Исследования и тренды</h2>
+    <p>Возрастает интерес к мониторингу сотрудников, адаптивным умным системам, которые настраивают среду в зависимости от физиологического состояния.</p>
+    <p class="small">Дискуссии ведутся о балансе между эффективностью мониторинга и защитой прав сотрудников.</p>
+  </section>
+
+  <!-- Слайд 9: процент успешной идентификации -->
+  <section class="slide" id="s9">
+    <h2>Точность распознавания по видам</h2>
+    <p>Радужка и отпечатки пальцев показывают наивысшую точность. Поведенческая биометрия более вариативна.</p>
+    <p class="lead">Высокая точность требует защиты данных и алгоритмов, учитывающих естественные колебания биометрических признаков.</p>
+  </section>
+
+  <!-- Слайд 10: интеграция в рабочую среду -->
+  <section class="slide" id="s10">
+    <h2>Интеграция биометрии в рабочую среду</h2>
+    <p>Биометрия позволяет мониторить усталость и стресс, автоматически настраивать условия труда (освещение, перерывы) для сохранения здоровья.</p>
+    <p class="small">Важно обеспечить прозрачность и этичность внедрения, чтобы избежать чувства излишнего контроля у сотрудников.</p>
+  </section>
+
+  <!-- Слайд 11: перспективы и будущее (таймлайн) -->
+  <section class="slide">
+    <h2>История развития</h2>
+    <div class="timeline" aria-hidden="true" style="margin-top:18px;">
+      <div class="step">
+        <div class="year">1892</div>
+        <div class="txt">Первые попытки использования отпечатков пальцев для идентификации.</div>
+      </div>
+      <div class="step">
+        <div class="year">1960s</div>
+        <div class="txt">Первые автоматические методы обработки отпечатков и лица.</div>
+      </div>
+      <div class="step">
+        <div class="year">2000s</div>
+        <div class="txt">Массовое внедрение в мобильных устройствах.</div>
+      </div>
+      <div class="step">
+        <div class="year">2015+</div>
+        <div class="txt">Революция за счёт глубокого обучения и камер высокой чёткости.</div>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- ---------------------- -->
-<!-- №4 Таймлайн -->
-<!-- ---------------------- -->
-<section class="slide">
-    <h2>Таймлайн развития</h2>
+  <!-- Слайд 12: итоги и выводы -->
+  <section class="slide" id="s12">
+    <h2>Итоги и выводы</h2>
+    <p>Биометрия будет усиливать безопасность и удобство идентификации, требуя при этом строгой конфиденциальности и соблюдения этических норм.</p>
+    <ul>
+      <li>Биометрия — мощный инструмент, но не панацея.</li>
+      <li>Необходимо комбинировать методы и применять меры защиты (MFA, шифрование).</li>
+      <li>Главная задача — создавать безопасную, здоровую и эффективную среду для людей.</li>
+    </ul>
+  </section>
 
-    <div class="timeline">
-        <div class="step">
-            <div class="year">1993</div>
-            <div class="txt">Основание компании</div>
-        </div>
-        <div class="step">
-            <div class="year">1997</div>
-            <div class="txt">RIVA 128 — первый прорыв</div>
-        </div>
-        <div class="step">
-            <div class="year">1999</div>
-            <div class="txt">GeForce 256 — первый GPU</div>
-        </div>
-        <div class="step">
-            <div class="year">2006</div>
-            <div class="txt">CUDA — революция GPGPU</div>
-        </div>
-        <div class="step">
-            <div class="year">2020+</div>
-            <div class="txt">Эра ИИ, дата-центров и крупных моделей</div>
-        </div>
-    </div>
-</section>
-
-<!-- ---------------------- -->
-<!-- №5 финальный -->
-<!-- ---------------------- -->
-<section class="slide">
+  <!-- Слайд 13: вопросы -->
+  <section class="slide" id="s13">
     <h2>Вопросы?</h2>
-    <p>Спасибо за внимание!</p>
-</section>
+    <p>Спасибо за внимание.</p>
+  </section>
 
-<div class="progress"></div>
-<script src="node_modules/@shower/core/dist/shower.js"></script>
+  <footer class="badge">
+    <a href="https://github.com/shower/shower" target="_blank" rel="noopener">Shower — презентации на HTML</a>
+  </footer>
 
+  <div class="progress"></div>
+
+  <!-- Подключение движка Shower -->
+  <script src="node_modules/@shower/core/dist/shower.js"></script>
 </body>
 </html>
