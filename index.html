@@ -1,298 +1,257 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <title>История компании NVIDIA — Shower</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8" />
+<title>Custom Shower Theme</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- Оставьте путь если у вас есть shower; иначе удалите и откройте локально без темы -->
-  <link rel="stylesheet" href="node_modules/@shower/ribbon/styles/styles.css">
+<!-- Только core Shower (без темы) -->
+<link rel="stylesheet" href="node_modules/@shower/core/dist/shower.css">
 
-  <style>
-    :root{
-      --bg: #0b0f14;
-      --card:#0f1720;
-      --accent: #7cd1ff;
-      --muted:#9fb0c3;
-      --glass: rgba(255,255,255,.04);
-    }
-    body{
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      color:#e6eef6;
-      background: #05070b;
-    }
-    .shower{ --slide-ratio: calc(16 / 9); }
-    .slide{ padding:40px; }
+<style>
+/* -----------------------------------------------
+   Глобальный фон страницы
+-------------------------------------------------*/
+body {
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    background: radial-gradient(circle at 30% 20%, #1b2330, #0a0d12 70%) fixed;
+    color: #e6eef6;
+    margin: 0;
+}
 
-    h2{ margin-top:0; }
-    p.lead{ font-size:18px; color:var(--muted); }
-    p.small{ font-size:14px; color:var(--muted); }
-    ul{ padding-left:22px; }
-    li{ margin-bottom:6px; }
+/* Соотношение слайдов */
+.shower {
+    --slide-ratio: calc(16 / 9);
+}
 
-    /* ---------- Hero / Title (фон + градиент + крупный заголовок) ---------- */
-    #hero{
-      display:grid;
-      align-items:center;
-      justify-items:center;
-      text-align:center;
-      min-height:60vh;
-      background:
-        linear-gradient(180deg, rgba(7,12,19,.55), rgba(7,12,19,.55)),
+/* -----------------------------------------------
+   Стиль слайдов
+-------------------------------------------------*/
+.slide {
+    padding: 60px;
+    border-radius: 22px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.6),
+        inset 0 0 40px rgba(255,255,255,0.03);
+    backdrop-filter: blur(18px);
+}
+
+/* крупный красивый заголовок */
+.slide h2 {
+    font-size: 48px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #7cd1ff, #6ef1c2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* подзаголовки */
+.slide h3 {
+    font-size: 26px;
+    margin-top: 24px;
+}
+
+/* обычный текст */
+.slide p,
+.slide li {
+    font-size: 20px;
+    color: #9fb0c3;
+    line-height: 1.55;
+}
+
+ul { padding-left: 24px; }
+
+/* -----------------------------------------------
+   Hero-слайд
+-------------------------------------------------*/
+#hero {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    min-height: 75vh;
+    background:
+        linear-gradient(180deg, rgba(7,12,19,.65), rgba(7,12,19,.85)),
         url('assets/hero.jpg') center/cover no-repeat;
-      border-radius:18px;
-      overflow:hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,.6);
-    }
-    #hero h2{
-      font-size: clamp(36px,6vw,64px);
-      margin: 0;
-      letter-spacing: .6px;
-      color: #fff;
-      text-transform: none;
-    }
-    #hero p.lead{
-      color: var(--muted);
-      margin-top:12px;
-      font-size:18px;
-    }
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,.65);
+}
 
-    /* ---------- Features grid (иконки + карточки) ---------- */
-    .features{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-      gap:20px;
-    }
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
-      border:1px solid rgba(255,255,255,.04);
-      padding:18px;
-      border-radius:14px;
-      display:flex;
-      gap:14px;
-      align-items:flex-start;
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-    .card:hover{ transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,.45); }
-    .card .icon{
-      width:64px;
-      height:64px;
-      border-radius:12px;
-      display:grid;
-      place-items:center;
-      background: linear-gradient(135deg, rgba(124,209,255,.12), rgba(124,255,194,.06));
-      border:1px solid rgba(124,209,255,.12);
-      font-size:24px;
-      color:var(--accent);
-    }
-    .card h3{ margin:0 0 4px; font-size:18px; }
-    .card p{ margin:0; color:var(--muted); font-size:14px; }
+#hero h1 {
+    font-size: 64px;
+    margin: 0;
+    color: #fff;
+}
 
-    /* ---------- Timeline (горизонтальная) ---------- */
-    .timeline{
-      display:flex;
-      gap:18px;
-      align-items:center;
-      overflow:auto;
-      padding:8px 6px;
-    }
-    .timeline .step{
-      min-width:180px;
-      background:var(--card);
-      border-radius:12px;
-      padding:14px;
-      border:1px solid rgba(255,255,255,.03);
-    }
-    .timeline .year{
-      color:var(--accent);
-      font-weight:700;
-      font-size:18px;
-    }
-    .timeline .txt{
-      color:var(--muted);
-      font-size:13px;
-      margin-top:8px;
-    }
+#hero p {
+    margin-top: 16px;
+    font-size: 22px;
+    color: #c8d4e0;
+}
 
-    /* ---------- Quote / callout ---------- */
-    .callout{
-      background: linear-gradient(90deg, rgba(124,209,255,.04), rgba(124,255,194,.02));
-      border:1px solid rgba(124,209,255,.06);
-      padding:24px;
-      border-radius:12px;
-      color:var(--muted);
-    }
+/* -----------------------------------------------
+   Карточки (3D, hover)
+-------------------------------------------------*/
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+    gap: 26px;
+    margin-top: 30px;
+}
 
-    /* Колонки Shower */
-    .columns.two{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:24px;
-    }
+.card {
+    padding: 22px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.3);
+    transition: .25s ease;
+}
 
-    @media (max-width:900px){
-      .columns.two{
-        grid-template-columns:1fr;
-      }
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 40px rgba(0,0,0,.45);
+}
+
+/* -----------------------------------------------
+   Таймлайн
+-------------------------------------------------*/
+.timeline {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    padding-top: 18px;
+}
+
+.step {
+    min-width: 200px;
+    padding: 16px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.06);
+}
+
+.step .year {
+    font-size: 22px;
+    font-weight: 700;
+    color: #7cd1ff;
+}
+.step .txt {
+    margin-top: 8px;
+    font-size: 16px;
+    color: #9fb0c3;
+}
+
+/* -----------------------------------------------
+   Адаптив
+-------------------------------------------------*/
+@media(max-width:900px){
+    .slide {
+        padding: 30px;
     }
-  </style>
+    .slide h2 {
+        font-size: 36px;
+    }
+}
+</style>
 </head>
+
 <body class="shower list">
 
-  <header class="caption">
-    <h1>История компании NVIDIA</h1>
-    <p>От первых GPU до эпохи искусственного интеллекта</p>
-  </header>
+<header class="caption">
+    <h1>Custom Shower Theme</h1>
+    <p>Современный интерфейс — без стандартных шаблонов</p>
+</header>
 
-  <!-- Слайд 1: титул -->
-  <section class="slide" id="s1">
-    <h2>История компании NVIDIA</h2>
-    <p class="lead">От NV1 до лидера рынка GPU и ИИ-решений</p>
-    <p class="small">Волкова Анна — ИУ3-31М</p>
-  </section>
-
-  <!-- Слайд 2: Зарождение NVIDIA -->
-  <section class="slide" id="s2">
-    <h2>Зарождение NVIDIA: команда и первые шаги</h2>
-    <p>Компания NVIDIA основана 5 апреля 1993 года тремя инженерами с опытом работы в LSI Logic, AMD и Sun Microsystems.</p>
-    <ul>
-      <li>Фокус на 3D-графике и игровых приложениях уже с момента основания.</li>
-      <li>Команда делает ставку на массовый рынок ПК и игровые консоли.</li>
-      <li>Название «NVIDIA» происходит от искажённой латинской «invidia» — «зависть».</li>
-    </ul>
-  </section>
-
-  <!-- Слайд 3: NV1 -->
-  <section class="slide" id="s3">
-    <h2>NV1: первый опыт и риск банкротства</h2>
-    <p>NV1 стал первым крупным продуктом NVIDIA: он объединял 2D/3D-ускорение, звук и поддержку геймпада.</p>
-    <ul>
-      <li>Использовал квадратичные текстуры, плохо совместимые с формирующимися стандартами треугольной геометрии.</li>
-      <li>Слабая поддержка игр и высокие затраты вывели компанию к грани банкротства в 1996 году.</li>
-      <li>Контракт с Sega помог NVIDIA удержаться на плаву и переосмыслить стратегию.</li>
-    </ul>
-    <p class="small">Ключевой вывод: следование индустриальным стандартам (DirectX, OpenGL) должно стать основой развития.</p>
-  </section>
-
-  <!-- Слайд 4: Эра RIVA -->
-  <section class="slide" id="s4">
-    <h2>Эра RIVA: путь к успеху</h2>
-    <div class="columns two">
-      <div>
-        <h3>RIVA 128 и поддержка DirectX</h3>
-        <p>Выпущенная в 1997 году RIVA 128 предложила заметный скачок производительности и полную совместимость с DirectX.</p>
-        <p class="small">Это укрепило доверие OEM-партнёров и расширило клиентскую базу NVIDIA.</p>
-      </div>
-      <div>
-        <h3>RIVA TNT и фундамент для GeForce</h3>
-        <p>В 1998 году RIVA TNT внедрила два текстурных блока, увеличив качество графики и скорость рендеринга.</p>
-        <p class="small">Коммерческий успех серии RIVA обеспечил финансовую устойчивость и базу для создания GeForce 256.</p>
-      </div>
+<!-- ---------------------- -->
+<!-- №1 Hero-слайд -->
+<!-- ---------------------- -->
+<section class="slide" id="hero">
+    <div>
+        <h1>История NVIDIA</h1>
+        <p>От NV1 до эпохи искусственного интеллекта</p>
     </div>
-  </section>
+</section>
 
-  <!-- Слайд 5: GeForce 256 -->
-  <section class="slide" id="s5">
-    <h2>Технический прорыв GeForce 256: рождение GPU</h2>
-    <p>GeForce 256 стал первой массовой видеокартой, официально названной GPU.</p>
+<!-- ---------------------- -->
+<!-- №2 Пример обычного слайда -->
+<!-- ---------------------- -->
+<section class="slide">
+    <h2>Основание NVIDIA</h2>
+    <p>Компания была основана 5 апреля 1993 года тремя инженерами, которые решили сосредоточиться на 3D-графике.</p>
     <ul>
-      <li>Интеграция блока Transform &amp; Lighting сняла часть нагрузки с CPU.</li>
-      <li>Параллельная архитектура открыла новую эру графических вычислений.</li>
-      <li>GeForce 256 задал новый стандарт производительности и качества 3D-графики.</li>
+        <li>Ставка на игровую 3D-графику</li>
+        <li>Работа с OEM-производителями</li>
+        <li>Первые эксперименты со специализированными чипами</li>
     </ul>
-    <p class="small">Именно с GeForce 256 GPU превращается в центральный элемент визуальных и научных вычислений.</p>
-  </section>
+</section>
 
-  <!-- Слайд 6: Ключевые этапы расширения NVIDIA -->
-  <section class="slide" id="s6">
-    <h2>Ключевые этапы развития NVIDIA</h2>
-    <div class="timeline" aria-hidden="true" style="margin-top:18px;">
-      <div class="step">
-        <div class="year">1993</div>
-        <div class="txt">Основание NVIDIA и выпуск первых графических процессоров для персональных компьютеров.</div>
-      </div>
-      <div class="step">
-        <div class="year">Начало 2000-х</div>
-        <div class="txt">Серия GeForce выводит качество графики и игр на новый уровень.</div>
-      </div>
-      <div class="step">
-        <div class="year">2010</div>
-        <div class="txt">Развитие архитектуры CUDA для ускорения общих вычислений на GPU.</div>
-      </div>
-      <div class="step">
-        <div class="year">2016</div>
-        <div class="txt">Активное внедрение технологий искусственного интеллекта и глубокого обучения.</div>
-      </div>
-      <div class="step">
-        <div class="year">Наше время</div>
-        <div class="txt">Выход за рамки графики: автопилот, дата-центры, высокопроизводительные вычисления.</div>
-      </div>
-    </div>
-  </section>
+<!-- ---------------------- -->
+<!-- №3 Карточки -->
+<!-- ---------------------- -->
+<section class="slide">
+    <h2>Ключевые продукты</h2>
 
-  <!-- Слайд 7: CUDA -->
-  <section class="slide" id="s7">
-    <h2>2006: запуск CUDA и рост экосистемы</h2>
-    <p>Платформа CUDA открыла GPU для общенаучных и прикладных задач за пределами графики.</p>
-    <ul>
-      <li>Ускорение физических, финансовых и медицинских вычислений.</li>
-      <li>Появление инструментов и библиотек, упрощающих разработку параллельных программ.</li>
-      <li>Расширение рынков: научные центры, финтех, медицина, индустрия развлечений.</li>
-      <li>CUDA стала фундаментом для развития глубокого обучения и HPC.</li>
-    </ul>
-  </section>
-
-  <!-- Слайд 8: Эра ИИ и суперкомпьютеров -->
-  <section class="slide" id="s8">
-    <h2>Эра искусственного интеллекта и суперкомпьютеров</h2>
-    <div class="features" style="margin-top:12px;">
-      <div class="card">
-        <div class="icon">GPU</div>
-        <div>
-          <h3>Ускорители Tesla и их наследники</h3>
-          <p>Линейки Tesla, а затем A100, H100 и Blackwell обеспечивают вычислительную мощность для ИИ и дата-центров.</p>
+    <div class="cards">
+        <div class="card">
+            <h3>NV1</h3>
+            <p>Первый экспериментальный ускоритель. Неудача подтолкнула NVIDIA к правильной стратегии.</p>
         </div>
-      </div>
-      <div class="card">
-        <div class="icon">☁</div>
-        <div>
-          <h3>Платформенные решения</h3>
-          <p>NVIDIA DRIVE, Clara и Omniverse создают экосистемы для автопилота, медицины и виртуальных миров.</p>
+        <div class="card">
+            <h3>RIVA TNT</h3>
+            <p>Первая массовая видеокарта, принесшая компании устойчивый успех.</p>
         </div>
-      </div>
-      <div class="card">
-        <div class="icon">∞</div>
-        <div>
-          <h3>Суперкомпьютеры и сети</h3>
-          <p>Покупка Mellanox усилила позиции NVIDIA в области высокоскоростных сетей для масштабных суперкомпьютеров.</p>
+        <div class="card">
+            <h3>GeForce 256</h3>
+            <p>Первый GPU в индустрии: начало новой графической эры.</p>
         </div>
-      </div>
     </div>
-  </section>
+</section>
 
-  <!-- Слайд 9: Рост и влияние NVIDIA -->
-  <section class="slide" id="s9">
-    <h2>Рост и влияние NVIDIA на рынок ИИ и HPC</h2>
-    <p>Взрывной рост выручки компании коррелирует с ростом спроса на GPU в области искусственного интеллекта и центров обработки данных.</p>
-    <p class="lead">NVIDIA превратилась в ключевого поставщика технологий для обучения нейросетей и высокопроизводительных научных вычислений.</p>
+<!-- ---------------------- -->
+<!-- №4 Таймлайн -->
+<!-- ---------------------- -->
+<section class="slide">
+    <h2>Таймлайн развития</h2>
 
-    <div class="callout" style="margin-top:18px;">
-      <strong>Итоги технологического лидерства NVIDIA</strong>
-      <ul>
-        <li>Путь от неудачи NV1 до доминирующих GPU-платформ.</li>
-        <li>Стратегия инноваций и следование стандартам индустрии (DirectX, OpenGL, CUDA).</li>
-        <li>Фокус на экосистеме ИИ и HPC вывел компанию на вершину цифровой индустрии.</li>
-      </ul>
+    <div class="timeline">
+        <div class="step">
+            <div class="year">1993</div>
+            <div class="txt">Основание компании</div>
+        </div>
+        <div class="step">
+            <div class="year">1997</div>
+            <div class="txt">RIVA 128 — первый прорыв</div>
+        </div>
+        <div class="step">
+            <div class="year">1999</div>
+            <div class="txt">GeForce 256 — первый GPU</div>
+        </div>
+        <div class="step">
+            <div class="year">2006</div>
+            <div class="txt">CUDA — революция GPGPU</div>
+        </div>
+        <div class="step">
+            <div class="year">2020+</div>
+            <div class="txt">Эра ИИ, дата-центров и крупных моделей</div>
+        </div>
     </div>
-  </section>
+</section>
 
-  <footer class="badge">
-    <a href="https://github.com/shower/shower" target="_blank" rel="noopener">Shower — презентации на HTML</a>
-  </footer>
+<!-- ---------------------- -->
+<!-- №5 финальный -->
+<!-- ---------------------- -->
+<section class="slide">
+    <h2>Вопросы?</h2>
+    <p>Спасибо за внимание!</p>
+</section>
 
-  <div class="progress"></div>
+<div class="progress"></div>
+<script src="node_modules/@shower/core/dist/shower.js"></script>
 
-  <!-- Подключение движка Shower -->
-  <script src="node_modules/@shower/core/dist/shower.js"></script>
 </body>
 </html>
