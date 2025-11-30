@@ -1,26 +1,98 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <title>Обзор биометрии — современные технологии, применение и влияние</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta charset="utf-8" />
+  <title>Дизайнерские слайды — Shower</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- Если у вас есть shower в проекте — оставьте. Иначе позже подскажу альтернативы. -->
+  <!-- Оставьте путь если у вас есть shower; иначе удалите и откройте локально без темы -->
   <link rel="stylesheet" href="node_modules/@shower/ribbon/styles/styles.css">
 
   <style>
-    .shower { --slide-ratio: calc(16 / 9); } 
-    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
-    .slide { padding: 36px; }
-    .lead { color: #9fb0c3; margin-top: 8px; }
-    .small { font-size: .95rem; color: #9fb0c3; }
-    .columns.two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .img-wrap { width:100%; display:grid; place-items:center; }
-    .img-wrap img { max-width:100%; height:auto; }
-    pre code { white-space: pre-wrap; word-break: break-word; }
-    /* Удобный разрыв длинных слов в заголовках */
-    .slide h2 { word-break: break-word; }
-  </style>
+    :root{
+      --bg: #0b0f14;
+      --card:#0f1720;
+      --accent: #7cd1ff;
+      --muted:#9fb0c3;
+      --glass: rgba(255,255,255,.04);
+    }
+    body{font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:#e6eef6;}
+    .shower{ --slide-ratio: calc(16 / 9); }
+    .slide{ padding:40px;}
+
+/* ---------- Hero / Title (фон + градиент + крупный заголовок) ---------- */
+#hero{
+  display:grid;
+  align-items:center;
+  justify-items:center;
+  text-align:center;
+  min-height:60vh;
+  background:
+    linear-gradient(180deg, rgba(7,12,19,.55), rgba(7,12,19,.55)),
+    url('assets/hero.jpg') center/cover no-repeat;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,.6);
+}
+#hero h2{ font-size: clamp(36px,6vw,64px); margin: 0; letter-spacing: .6px; color: #fff; text-transform: none;}
+#hero p.lead{ color: var(--muted); margin-top:12px; font-size:18px; }
+
+/* ---------- Features grid (иконки + карточки) ---------- */
+.features{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap:20px;
+}
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+  border:1px solid rgba(255,255,255,.04);
+  padding:18px; border-radius:14px;
+  display:flex; gap:14px; align-items:flex-start;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.card:hover{ transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,.45); }
+.card .icon{
+  width:64px; height:64px; border-radius:12px; display:grid; place-items:center;
+  background: linear-gradient(135deg, rgba(124,209,255,.12), rgba(124,255,194,.06)); border:1px solid rgba(124,209,255,.12);
+  font-size:24px; color:var(--accent);
+}
+.card h3{ margin:0 0 4px; font-size:18px; }
+.card p{ margin:0; color:var(--muted); font-size:14px; }
+
+/* ---------- Timeline (горизонтальная) ---------- */
+.timeline{ display:flex; gap:18px; align-items:center; overflow:auto; padding:8px 6px; }
+.timeline .step{ min-width:180px; background:var(--card); border-radius:12px; padding:14px; border:1px solid rgba(255,255,255,.03); }
+.timeline .year{ color:var(--accent); font-weight:700; font-size:18px; }
+.timeline .txt{ color:var(--muted); font-size:13px; margin-top:8px; }
+
+/* ---------- Two-column showcase ---------- */
+.showcase{ display:grid; grid-template-columns: 1fr 1fr; gap:28px; align-items:center; }
+.showcase .img{ border-radius:12px; overflow:hidden; box-shadow: 0 8px 24px rgba(0,0,0,.45); }
+.showcase img{ width:100%; height:100%; object-fit:cover; display:block; }
+.showcase .text h3{ margin-top:0; }
+.showcase .text p{ color:var(--muted); }
+
+/* ---------- Chart placeholder (имитация столбчатого графика) ---------- */
+.chart{
+  display:flex; gap:18px; align-items:end; height:220px; padding:24px; background: linear-gradient(180deg, rgba(255,255,255,.01), rgba(255,255,255,.02)); border-radius:12px;
+}
+.bar{ width:60px; border-radius:8px 8px 4px 4px; background:linear-gradient(180deg,var(--accent),#6ef1c2); display:flex; align-items:end; justify-content:center; }
+.bar .val{ writing-mode:vertical-rl; transform: rotate(180deg); color:#042; font-weight:700; padding-bottom:8px; font-size:14px; }
+
+/* ---------- Gallery grid ---------- */
+.gallery{ display:grid; grid-template-columns: repeat(3,1fr); gap:12px; }
+.gallery .g{ border-radius:10px; overflow:hidden; height:140px; background-size:cover; background-position:center; position:relative; }
+.gallery .g::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.25)); }
+
+/* ---------- Quote / callout ---------- */
+.callout{ background: linear-gradient(90deg, rgba(124,209,255,.04), rgba(124,255,194,.02)); border:1px solid rgba(124,209,255,.06); padding:24px; border-radius:12px; color:var(--muted); }
+
+/* Responsive */
+@media (max-width:900px){
+  .showcase{ grid-template-columns:1fr; }
+  .gallery{ grid-template-columns: repeat(2,1fr); }
+}
+</style>
 </head>
 <body class="shower list">
 
