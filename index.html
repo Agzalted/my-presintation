@@ -15,7 +15,7 @@
 				--bg-page: #cbd5f5; /* фон списка слайдов */
 				--bg-slide: #ffffff; /* фон слайдов */
 				--accent: #16a34a; /* зелёный акцент */
-				--muted: #64748b;
+				--muted: #586d51;
 			}
 
 			body {
@@ -99,19 +99,29 @@
 			.slide::after {
 				content: counter(slide);
 				position: absolute;
-				top: 16px;
+				top: 18px;
 				right: 20px;
-				width: 34px;
-				height: 34px;
-				border-radius: 50%;
-				background: var(--accent);
-				color: #fff;
+
+				/* форма → квадратик */
+				width: 36px;
+				height: 36px;
+				border-radius: 6px; /* ← можно поставить 0, если нужен полностью квадрат */
+
+				/* цвет фона → например, фиолетовый */
+				background: #275035; /* ← заменяй на любой */
+
+				/* цвет текста */
+				color: #ffffff;
+
 				display: flex;
 				align-items: center;
 				justify-content: center;
+
 				font-size: 16px;
 				font-weight: 600;
-				box-shadow: 0 4px 12px rgba(22, 163, 74, 0.55);
+
+				/* тень — опционально */
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 			}
 
 			/* убираем «хвостик» закладки, который рисует тема */
@@ -457,15 +467,6 @@
 			<h2>Вопросы?</h2>
 			<p>Спасибо за внимание.</p>
 		</section>
-
-		<footer class="badge">
-			<a
-				href="https://github.com/shower/shower"
-				target="_blank"
-				rel="noopener"
-				>Shower — презентации на HTML</a
-			>
-		</footer>
 
 		<div class="progress"></div>
 
