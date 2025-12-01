@@ -5,14 +5,14 @@
   <title>Дизайнерские слайды — Shower</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- Можно оставить тему Shower, но мы большинство стилей переопределяем -->
+  <!-- Базовая тема Shower, дальше всё переопределяем -->
   <link rel="stylesheet" href="node_modules/@shower/ribbon/styles/styles.css">
 
   <style>
     :root{
-      --bg: #f5f7f5;
-      --card:#ffffff;
-      --accent: #16a34a; /* зелёный акцент */
+      --bg: #e9fbee;        /* общий зелёный фон страницы */
+      --card:#ffffff;       /* фон слайда-карточки */
+      --accent: #16a34a;    /* зелёный акцент */
       --muted:#64748b;
       --glass: rgba(22,163,74,.06);
     }
@@ -25,16 +25,20 @@
 
     .shower{ --slide-ratio: calc(16 / 9); }
 
+    /* ОБЩИЙ ВИД ВСЕХ СЛАЙДОВ */
     .slide{
       padding:40px 60px;
       box-sizing:border-box;
-      background: var(--bg);
+      background: var(--card);                    /* белая карточка */
+      border-radius:22px;
+      border:1px solid #bbf7d0;
+      box-shadow: 0 18px 45px rgba(15,23,42,.12);
       display:flex;
       flex-direction:column;
       justify-content:center;
     }
 
-    /* Ограничиваем ширину контента, чтобы всё выглядело аккуратно */
+    /* Ограничиваем ширину контента, чтобы всё ровно стояло */
     .slide > *{
       max-width: 960px;
       margin-left:auto;
@@ -80,29 +84,17 @@
 
     strong{ color:#065f46; }
 
-    /* ---------- Hero / Title: простой светлый фон с зелёной полосой ---------- */
+    /* ---------- Слайд 1: чуть «герой», но без фото ---------- */
     #s1{
-      position:relative;
-    }
-
-    #s1::before{
-      content:'';
-      position:absolute;
-      inset:0;
       background: linear-gradient(135deg,#bbf7d0,#ecfdf3);
-      opacity:.6;
-      z-index:-1;
     }
-
     #s1 h2{
       font-size:40px;
       margin-bottom:8px;
     }
-
     #s1 .lead{
       font-size:20px;
     }
-
     #s1 .small{
       margin-top:18px;
     }
@@ -181,7 +173,7 @@
       line-height:1.5;
     }
 
-    /* ---------- Two-column showcase (используется .columns.two) ---------- */
+    /* ---------- Две колонки ---------- */
     .columns.two{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -194,7 +186,7 @@
       color:var(--muted);
     }
 
-    /* ---------- Chart placeholder (столбики зелёные, фон простой) ---------- */
+    /* ---------- Chart placeholder (зелёные столбики) ---------- */
     .chart{
       display:flex;
       gap:18px;
@@ -250,7 +242,7 @@
       background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.07));
     }
 
-    /* ---------- Quote / callout ---------- */
+    /* ---------- Цитата / callout ---------- */
     .callout{
       background:#ecfdf3;
       border:1px solid rgba(22,163,74,.3);
@@ -266,6 +258,26 @@
       color:#065f46;
     }
 
+    /* ---------- Фигуры на 4-м слайде ---------- */
+    #s4 .shapes-row{
+      display:flex;
+      gap:16px;
+      margin-top:28px;
+    }
+
+    #s4 .shape{
+      height:60px;
+      border-radius:18px;
+      background: linear-gradient(135deg,#22c55e,#16a34a);
+      box-shadow: 0 10px 25px rgba(22,163,74,.35);
+      flex:1;
+    }
+
+    #s4 .shape--small{
+      flex:0 0 120px;
+      border-radius:999px;
+    }
+
     /* Responsive */
     @media (max-width:900px){
       .slide{
@@ -276,6 +288,9 @@
       }
       .gallery{
         grid-template-columns: repeat(2,1fr);
+      }
+      #s4 .shapes-row{
+        flex-direction:column;
       }
     }
   </style>
@@ -318,11 +333,17 @@
     </div>
   </section>
 
-  <!-- Слайд 4: история и развитие -->
+  <!-- Слайд 4: история и развитие (с фигурами) -->
   <section class="slide" id="s4">
     <h2>История и развитие</h2>
     <p>Отпечатки пальцев стали основой идентификации в XIX веке. В XX веке появились методы распознавания лица и радужки.</p>
     <p class="lead">Развитие ИИ и вычислительных мощностей существенно расширило возможности биометрии в XXI веке.</p>
+
+    <!-- Декоративные зелёные фигуры -->
+    <div class="shapes-row">
+      <div class="shape shape--small"></div>
+      <div class="shape"></div>
+    </div>
   </section>
 
   <!-- Слайд 5: основные методы -->
