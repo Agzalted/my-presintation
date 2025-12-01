@@ -1,318 +1,474 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="utf-8" />
-  <title>Обзор биометрии — Shower</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+	<head>
+		<meta charset="utf-8" />
+		<title>Обзор биометрии — Shower</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  <link rel="stylesheet" href="node_modules/@shower/ribbon/styles/styles.css">
+		<link
+			rel="stylesheet"
+			href="node_modules/@shower/ribbon/styles/styles.css"
+		/>
 
-  <style>
-    :root{
-      --bg-page:#cbd5f5;    /* фон списка слайдов */
-      --bg-slide:#ffffff;   /* фон слайдов */
-      --accent:#16a34a;     /* зелёный акцент */
-      --muted:#64748b;
-    }
+		<style>
+			:root {
+				--bg-page: #cbd5f5; /* фон списка слайдов */
+				--bg-slide: #ffffff; /* фон слайдов */
+				--accent: #16a34a; /* зелёный акцент */
+				--muted: #64748b;
+			}
 
-    body{
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
+			body {
+				font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+					"Helvetica Neue", Arial;
+			}
 
-    .shower{
-      --slide-ratio: calc(16 / 9);
-      background: var(--bg-page);
-    }
+			.shower {
+				--slide-ratio: calc(16 / 9);
+				background: var(--bg-page);
+			}
 
-    /* карточка-слайд */
-    .slide{
-      position:relative;              /* нужно для кружка с номером */
-      padding:40px 60px;
-      background: var(--bg-slide);
-      border-radius:24px;
-      box-shadow:0 18px 45px rgba(15,23,42,.45);
-      box-sizing:border-box;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-    }
+			/* карточка-слайд */
+			.slide {
+				position: relative; /* нужно для кружка с номером */
+				padding: 40px 60px;
+				background: var(--bg-slide);
+				border-radius: 24px;
+				box-shadow: 0 18px 45px rgba(15, 23, 42, 0.45);
+				box-sizing: border-box;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+			}
 
-    /* красивый центрированный контент */
-    .slide > *{
-      max-width: 960px;
-      margin-left:auto;
-      margin-right:auto;
-    }
+			/* красивый центрированный контент */
+			.slide > * {
+				max-width: 960px;
+				margin-left: auto;
+				margin-right: auto;
+			}
 
-    /* ЗАГОЛОВКИ / ТЕКСТ */
-    h2{
-      margin-top:0;
-      margin-bottom:16px;
-      font-size:32px;
-      font-weight:700;
-      color:#111827;
-    }
+			/* ЗАГОЛОВКИ / ТЕКСТ */
+			h2 {
+				margin-top: 0;
+				margin-bottom: 16px;
+				font-size: 32px;
+				font-weight: 700;
+				color: #111827;
+			}
 
-    h3{
-      margin-top:0;
-      margin-bottom:8px;
-      font-size:20px;
-      color:#064e3b;
-    }
+			h3 {
+				margin-top: 0;
+				margin-bottom: 8px;
+				font-size: 20px;
+				color: #064e3b;
+			}
 
-    p{ font-size:16px; line-height:1.6; }
+			p {
+				font-size: 16px;
+				line-height: 1.6;
+			}
 
-    p.lead{
-      color:var(--muted);
-      font-size:18px;
-      margin-top:4px;
-    }
+			p.lead {
+				color: var(--muted);
+				font-size: 18px;
+				margin-top: 4px;
+			}
 
-    p.small{
-      color:var(--muted);
-      font-size:14px;
-      margin-top:10px;
-    }
+			p.small {
+				color: var(--muted);
+				font-size: 14px;
+				margin-top: 10px;
+			}
 
-    ul{
-      padding-left:22px;
-      font-size:16px;
-      line-height:1.5;
-    }
+			ul {
+				padding-left: 22px;
+				font-size: 16px;
+				line-height: 1.5;
+			}
 
-    li{ margin-bottom:6px; }
+			li {
+				margin-bottom: 6px;
+			}
 
-    strong{ color:#065f46; }
+			strong {
+				color: #065f46;
+			}
 
-    /* ---------- НОМЕР СЛАЙДА: зелёный кружок вместо красной закладки ---------- */
-    .slide::after{
-      content: counter(slide);
-      position:absolute;
-      top:16px;
-      right:20px;
-      width:34px;
-      height:34px;
-      border-radius:50%;
-      background: var(--accent);
-      color:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:16px;
-      font-weight:600;
-      box-shadow:0 4px 12px rgba(22,163,74,.55);
-    }
+			/* ---------- НОМЕР СЛАЙДА: зелёный кружок вместо красной закладки ---------- */
+			.slide::after {
+				content: counter(slide);
+				position: absolute;
+				top: 16px;
+				right: 20px;
+				width: 34px;
+				height: 34px;
+				border-radius: 50%;
+				background: var(--accent);
+				color: #fff;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 16px;
+				font-weight: 600;
+				box-shadow: 0 4px 12px rgba(22, 163, 74, 0.55);
+			}
 
-    /* убираем «хвостик» закладки, который рисует тема */
-    .slide::before{
-      content:none !important;
-    }
+			/* убираем «хвостик» закладки, который рисует тема */
+			.slide::before {
+				content: none !important;
+			}
 
-    /* ---------- Слайд 1: зелёный градиентный фон ---------- */
-    #s1{
-      background: linear-gradient(135deg, #bbf7d0, #f0fdf4);
-    }
+			/* ---------- Слайд 1: зелёный градиентный фон ---------- */
+			#s1 {
+				background: linear-gradient(135deg, #bbf7d0, #f0fdf4);
+			}
 
-    #s1 h2{ font-size:40px; margin-bottom:8px; }
-    #s1 .lead{ font-size:20px; }
-    #s1 .small{ margin-top:18px; }
+			#s1 h2 {
+				font-size: 40px;
+				margin-bottom: 8px;
+			}
+			#s1 .lead {
+				font-size: 20px;
+			}
+			#s1 .small {
+				margin-top: 18px;
+			}
 
-    /* ---------- Две колонки ---------- */
-    .columns.two{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:28px;
-      align-items:flex-start;
-      margin-top:20px;
-    }
+			/* ---------- Две колонки ---------- */
+			.columns.two {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 28px;
+				align-items: flex-start;
+				margin-top: 20px;
+			}
 
-    .columns.two p{ color:var(--muted); }
+			.columns.two p {
+				color: var(--muted);
+			}
 
-    /* ---------- Декоративные фигуры на 4-м слайде ---------- */
-    #s4 .shapes-row{
-      display:flex;
-      gap:18px;
-      margin-top:30px;
-      justify-content:center;
-    }
+			/* ---------- Декоративные фигуры на 4-м слайде ---------- */
+			#s4 .shapes-row {
+				display: flex;
+				gap: 18px;
+				margin-top: 30px;
+				justify-content: center;
+			}
 
-    /* большой круг */
-    #s4 .shape-circle{
-      width:70px;
-      height:70px;
-      border-radius:50%;
-      background:var(--accent);
-      box-shadow:0 12px 25px rgba(22,163,74,.45);
-    }
+			/* большой круг */
+			#s4 .shape-circle {
+				width: 70px;
+				height: 70px;
+				border-radius: 50%;
+				background: var(--accent);
+				box-shadow: 0 12px 25px rgba(22, 163, 74, 0.45);
+			}
 
-    /* вытянутый овал */
-    #s4 .shape-pill{
-      width:180px;
-      height:46px;
-      border-radius:999px;
-      background:linear-gradient(135deg,#22c55e,#16a34a);
-      box-shadow:0 12px 25px rgba(22,163,74,.45);
-    }
+			/* вытянутый овал */
+			#s4 .shape-pill {
+				width: 180px;
+				height: 46px;
+				border-radius: 999px;
+				background: linear-gradient(135deg, #22c55e, #16a34a);
+				box-shadow: 0 12px 25px rgba(22, 163, 74, 0.45);
+			}
 
-    /* адаптив */
-    @media (max-width:900px){
-      .slide{
-        padding:28px 20px;
-      }
-      .columns.two{
-        grid-template-columns:1fr;
-      }
-      #s4 .shapes-row{
-        flex-direction:column;
-        align-items:center;
-      }
-    }
-  </style>
-</head>
-<body class="shower list">
+			/* адаптив */
+			@media (max-width: 900px) {
+				/* ---------- ВОССТАНОВЛЕННЫЙ СТИЛЬ ДЛЯ ТАЙМЛАЙНА С РАМКАМИ ---------- */
+				.timeline {
+					display: flex;
+					gap: 18px;
+					overflow-x: auto;
+					padding: 10px 6px;
+					margin-top: 20px;
+				}
 
-  <header class="caption">
-    <h1>Обзор биометрии</h1>
-    <p>Современные технологии, применение и влияние — 2025</p>
-  </header>
+				.timeline .step {
+					min-width: 200px;
 
-  <!-- 1 -->
-  <section class="slide" id="s1">
-    <h2>Обзор биометрии</h2>
-    <p class="lead">Современные технологии, применение и влияние</p>
-    <p class="small">Коровин Аким — ИУ3-31М, 2025</p>
-  </section>
+					/* светлый зелёный фон карточек */
+					background: #f6fff8;
 
-  <!-- 2 -->
-  <section class="slide" id="s2">
-    <h2>Исторический и технологический контекст</h2>
-    <p>Биометрия развивается с XIX века (первые — отпечатки пальцев). К концу XX века появились распознавание лица и радужки.</p>
-    <p class="lead">Современный прогресс обеспечили рост вычислительных мощностей, компьютерное зрение и машинное обучение — это сделало биометрию универсальной во многих сферах.</p>
-  </section>
+					border-radius: 14px;
+					padding: 16px 18px;
 
-  <!-- 3 -->
-  <section class="slide" id="s3">
-    <h2>Определение биометрии</h2>
-    <p>Биометрия — методы идентификации по уникальным биологическим признакам человека.</p>
+					/* рамка как в оригинальной версии */
+					border: 2px solid rgba(22, 163, 74, 0.55);
 
-    <div class="columns two">
-      <div>
-        <h3>Физиологическая биометрия</h3>
-        <p>Измерение физических характеристик: отпечатки пальцев, радужная оболочка, геометрия ладони. Обычно эти параметры статичны и стабильны во времени.</p>
-      </div>
-      <div>
-        <h3>Поведенческая биометрия</h3>
-        <p>Учитывает динамические особенности: голос, походка, стиль набора текста. Эти параметры изменчивы и зависят от условий.</p>
-      </div>
-    </div>
-  </section>
+					/* фирменная «карточная» тень */
+					box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+				}
 
-  <!-- 4 -->
-  <section class="slide" id="s4">
-    <h2>История и развитие</h2>
-    <p>Отпечатки пальцев стали основой идентификации в XIX веке. В XX веке появились методы распознавания лица и радужки.</p>
-    <p class="lead">Развитие ИИ и вычислительных мощностей существенно расширило возможности биометрии в XXI веке.</p>
+				.timeline .year {
+					font-size: 20px;
+					font-weight: 700;
+					color: #16a34a;
+				}
 
-    <div class="shapes-row">
-      <div class="shape-circle"></div>
-      <div class="shape-pill"></div>
-    </div>
-  </section>
+				.timeline .txt {
+					margin-top: 8px;
+					font-size: 14px;
+					color: #46515f;
+					line-height: 1.5;
+				}
 
-  <!-- остальные слайды оставляю как были -->
-  <!-- 5 -->
-  <section class="slide" id="s5">
-    <h2>Основные методы биометрии</h2>
-    <ul>
-      <li><strong>Отпечаток пальца</strong> — самый распространённый, уникальность папиллярного узора.</li>
-      <li><strong>Распознавание лица</strong> — анализ пропорций и черт лица с помощью камер и алгоритмов CV.</li>
-      <li><strong>Распознавание радужной оболочки</strong> — высокоточный метод анализа структуры ириса.</li>
-      <li><strong>Распознавание голоса</strong> — анализ тембра и интонации.</li>
-      <li><strong>Поведенческая биометрия</strong> — походка, подпись, паттерны ввода (keystroke dynamics).</li>
-    </ul>
-  </section>
+				.slide {
+					padding: 28px 20px;
+				}
+				.columns.two {
+					grid-template-columns: 1fr;
+				}
+				#s4 .shapes-row {
+					flex-direction: column;
+					align-items: center;
+				}
+			}
+		</style>
+	</head>
+	<body class="shower list">
+		<header class="caption">
+			<h1>Обзор биометрии</h1>
+			<p>Современные технологии, применение и влияние — 2025</p>
+		</header>
 
-  <!-- 6 -->
-  <section class="slide" id="s6">
-    <h2>Применения биометрии в повседневной жизни</h2>
-    <p>Биометрия уже применяется для безопасности и удобства: мобильные устройства (разблокировка), банковские сервисы, контроль доступа, государственная идентификация, медицина.</p>
-    <p class="small">Биометрия расширяет возможности бесконтактной и безопасной аутентификации во многих областях.</p>
-  </section>
+		<!-- 1 -->
+		<section class="slide" id="s1">
+			<h2>Обзор биометрии</h2>
+			<p class="lead">Современные технологии, применение и влияние</p>
+			<p class="small">Коровин Аким — ИУ3-31М, 2025</p>
+		</section>
 
-  <!-- 7 -->
-  <section class="slide" id="s7">
-    <h2>Биометрия на рабочем месте</h2>
-    <p>Используется для контроля доступа, учёта рабочего времени и мониторинга состояния сотрудников (включая физиологические показатели и выражения лица).</p>
-    <p class="lead">Потенциал для улучшения условий труда велик, однако важны этические аспекты и защита приватности работника.</p>
-  </section>
+		<!-- 2 -->
+		<section class="slide" id="s2">
+			<h2>Исторический и технологический контекст</h2>
+			<p>
+				Биометрия развивается с XIX века (первые — отпечатки пальцев). К
+				концу XX века появились распознавание лица и радужки.
+			</p>
+			<p class="lead">
+				Современный прогресс обеспечили рост вычислительных мощностей,
+				компьютерное зрение и машинное обучение — это сделало биометрию
+				универсальной во многих сферах.
+			</p>
+		</section>
 
-  <!-- 8 -->
-  <section class="slide" id="s8">
-    <h2>Исследования и тренды</h2>
-    <p>Возрастает интерес к мониторингу сотрудников, адаптивным умным системам, которые настраивают среду в зависимости от физиологического состояния.</p>
-    <p class="small">Дискуссии ведутся о балансе между эффективностью мониторинга и защитой прав сотрудников.</p>
-  </section>
+		<!-- 3 -->
+		<section class="slide" id="s3">
+			<h2>Определение биометрии</h2>
+			<p>
+				Биометрия — методы идентификации по уникальным биологическим
+				признакам человека.
+			</p>
 
-  <!-- 9 -->
-  <section class="slide" id="s9">
-    <h2>Точность распознавания по видам</h2>
-    <p>Радужка и отпечатки пальцев показывают наивысшую точность. Поведенческая биометрия более вариативна.</p>
-    <p class="lead">Высокая точность требует защиты данных и алгоритмов, учитывающих естественные колебания биометрических признаков.</p>
-  </section>
+			<div class="columns two">
+				<div>
+					<h3>Физиологическая биометрия</h3>
+					<p>
+						Измерение физических характеристик: отпечатки пальцев,
+						радужная оболочка, геометрия ладони. Обычно эти
+						параметры статичны и стабильны во времени.
+					</p>
+				</div>
+				<div>
+					<h3>Поведенческая биометрия</h3>
+					<p>
+						Учитывает динамические особенности: голос, походка,
+						стиль набора текста. Эти параметры изменчивы и зависят
+						от условий.
+					</p>
+				</div>
+			</div>
+		</section>
 
-  <!-- 10 -->
-  <section class="slide" id="s10">
-    <h2>Интеграция биометрии в рабочую среду</h2>
-    <p>Биометрия позволяет мониторить усталость и стресс, автоматически настраивать условия труда (освещение, перерывы) для сохранения здоровья.</p>
-    <p class="small">Важно обеспечить прозрачность и этичность внедрения, чтобы избежать чувства излишнего контроля у сотрудников.</p>
-  </section>
+		<!-- 4 -->
+		<section class="slide" id="s4">
+			<h2>История и развитие</h2>
+			<p>
+				Отпечатки пальцев стали основой идентификации в XIX веке. В XX
+				веке появились методы распознавания лица и радужки.
+			</p>
+			<p class="lead">
+				Развитие ИИ и вычислительных мощностей существенно расширило
+				возможности биометрии в XXI веке.
+			</p>
 
-  <!-- 11 -->
-  <section class="slide" id="s11">
-    <h2>История развития</h2>
-    <div class="timeline" aria-hidden="true">
-      <div class="step">
-        <div class="year">1892</div>
-        <div class="txt">Первые попытки использования отпечатков пальцев для идентификации.</div>
-      </div>
-      <div class="step">
-        <div class="year">1960s</div>
-        <div class="txt">Первые автоматические методы обработки отпечатков и лица.</div>
-      </div>
-      <div class="step">
-        <div class="year">2000s</div>
-        <div class="txt">Массовое внедрение в мобильных устройствах.</div>
-      </div>
-      <div class="step">
-        <div class="year">2015+</div>
-        <div class="txt">Революция за счёт глубокого обучения и камер высокой чёткости.</div>
-      </div>
-    </div>
-  </section>
+			<div class="shapes-row">
+				<div class="shape-circle"></div>
+				<div class="shape-pill"></div>
+			</div>
+		</section>
 
-  <!-- 12 -->
-  <section class="slide" id="s12">
-    <h2>Итоги и выводы</h2>
-    <p>Биометрия будет усиливать безопасность и удобство идентификации, требуя при этом строгой конфиденциальности и соблюдения этических норм.</p>
-    <ul>
-      <li>Биометрия — мощный инструмент, но не панацея.</li>
-      <li>Необходимо комбинировать методы и применять меры защиты (MFA, шифрование).</li>
-      <li>Главная задача — создавать безопасную, здоровую и эффективную среду для людей.</li>
-    </ul>
-  </section>
+		<!-- остальные слайды оставляю как были -->
+		<!-- 5 -->
+		<section class="slide" id="s5">
+			<h2>Основные методы биометрии</h2>
+			<ul>
+				<li>
+					<strong>Отпечаток пальца</strong> — самый распространённый,
+					уникальность папиллярного узора.
+				</li>
+				<li>
+					<strong>Распознавание лица</strong> — анализ пропорций и
+					черт лица с помощью камер и алгоритмов CV.
+				</li>
+				<li>
+					<strong>Распознавание радужной оболочки</strong> —
+					высокоточный метод анализа структуры ириса.
+				</li>
+				<li>
+					<strong>Распознавание голоса</strong> — анализ тембра и
+					интонации.
+				</li>
+				<li>
+					<strong>Поведенческая биометрия</strong> — походка, подпись,
+					паттерны ввода (keystroke dynamics).
+				</li>
+			</ul>
+		</section>
 
-  <!-- 13 -->
-  <section class="slide" id="s13">
-    <h2>Вопросы?</h2>
-    <p>Спасибо за внимание.</p>
-  </section>
+		<!-- 6 -->
+		<section class="slide" id="s6">
+			<h2>Применения биометрии в повседневной жизни</h2>
+			<p>
+				Биометрия уже применяется для безопасности и удобства: мобильные
+				устройства (разблокировка), банковские сервисы, контроль
+				доступа, государственная идентификация, медицина.
+			</p>
+			<p class="small">
+				Биометрия расширяет возможности бесконтактной и безопасной
+				аутентификации во многих областях.
+			</p>
+		</section>
 
-  <footer class="badge">
-    <a href="https://github.com/shower/shower" target="_blank" rel="noopener">Shower — презентации на HTML</a>
-  </footer>
+		<!-- 7 -->
+		<section class="slide" id="s7">
+			<h2>Биометрия на рабочем месте</h2>
+			<p>
+				Используется для контроля доступа, учёта рабочего времени и
+				мониторинга состояния сотрудников (включая физиологические
+				показатели и выражения лица).
+			</p>
+			<p class="lead">
+				Потенциал для улучшения условий труда велик, однако важны
+				этические аспекты и защита приватности работника.
+			</p>
+		</section>
 
-  <div class="progress"></div>
+		<!-- 8 -->
+		<section class="slide" id="s8">
+			<h2>Исследования и тренды</h2>
+			<p>
+				Возрастает интерес к мониторингу сотрудников, адаптивным умным
+				системам, которые настраивают среду в зависимости от
+				физиологического состояния.
+			</p>
+			<p class="small">
+				Дискуссии ведутся о балансе между эффективностью мониторинга и
+				защитой прав сотрудников.
+			</p>
+		</section>
 
-  <script src="node_modules/@shower/core/dist/shower.js"></script>
-</body>
+		<!-- 9 -->
+		<section class="slide" id="s9">
+			<h2>Точность распознавания по видам</h2>
+			<p>
+				Радужка и отпечатки пальцев показывают наивысшую точность.
+				Поведенческая биометрия более вариативна.
+			</p>
+			<p class="lead">
+				Высокая точность требует защиты данных и алгоритмов, учитывающих
+				естественные колебания биометрических признаков.
+			</p>
+		</section>
+
+		<!-- 10 -->
+		<section class="slide" id="s10">
+			<h2>Интеграция биометрии в рабочую среду</h2>
+			<p>
+				Биометрия позволяет мониторить усталость и стресс, автоматически
+				настраивать условия труда (освещение, перерывы) для сохранения
+				здоровья.
+			</p>
+			<p class="small">
+				Важно обеспечить прозрачность и этичность внедрения, чтобы
+				избежать чувства излишнего контроля у сотрудников.
+			</p>
+		</section>
+
+		<!-- 11 -->
+		<section class="slide" id="s11">
+			<h2>История развития</h2>
+			<div class="timeline" aria-hidden="true">
+				<div class="step">
+					<div class="year">1892</div>
+					<div class="txt">
+						Первые попытки использования отпечатков пальцев для
+						идентификации.
+					</div>
+				</div>
+				<div class="step">
+					<div class="year">1960s</div>
+					<div class="txt">
+						Первые автоматические методы обработки отпечатков и
+						лица.
+					</div>
+				</div>
+				<div class="step">
+					<div class="year">2000s</div>
+					<div class="txt">
+						Массовое внедрение в мобильных устройствах.
+					</div>
+				</div>
+				<div class="step">
+					<div class="year">2015+</div>
+					<div class="txt">
+						Революция за счёт глубокого обучения и камер высокой
+						чёткости.
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 12 -->
+		<section class="slide" id="s12">
+			<h2>Итоги и выводы</h2>
+			<p>
+				Биометрия будет усиливать безопасность и удобство идентификации,
+				требуя при этом строгой конфиденциальности и соблюдения
+				этических норм.
+			</p>
+			<ul>
+				<li>Биометрия — мощный инструмент, но не панацея.</li>
+				<li>
+					Необходимо комбинировать методы и применять меры защиты
+					(MFA, шифрование).
+				</li>
+				<li>
+					Главная задача — создавать безопасную, здоровую и
+					эффективную среду для людей.
+				</li>
+			</ul>
+		</section>
+
+		<!-- 13 -->
+		<section class="slide" id="s13">
+			<h2>Вопросы?</h2>
+			<p>Спасибо за внимание.</p>
+		</section>
+
+		<footer class="badge">
+			<a
+				href="https://github.com/shower/shower"
+				target="_blank"
+				rel="noopener"
+				>Shower — презентации на HTML</a
+			>
+		</footer>
+
+		<div class="progress"></div>
+
+		<script src="node_modules/@shower/core/dist/shower.js"></script>
+	</body>
 </html>
